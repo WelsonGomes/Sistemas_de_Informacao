@@ -1,0 +1,44 @@
+insert into tbitem (nf_fiscal, pro_codigo, qtdade) values (1,4, 20);
+
+insert into tbnotafiscal values (1,'2020-10-26',0)
+
+
+
+select nf.nf_fiscal as nota,
+       pro.descricao as produto,
+	   it.qtdade as quantidade, 
+	   pro.valor as valor_unitario,
+	   (it.qtdade * pro.valor) as total,
+	   nf.data_nota as data
+  from tbnotafiscal nf
+  join tbitem it
+    on it.nf_fiscal = nf.nf_fiscal
+  join tbproduto pro
+    on pro.pro_codigo = it.pro_codigo
+
+select * from tbproduto
+select * from tbitem
+select * from tbnotafiscal
+
+create or replace function atualizanotafiscal() returns trigger as
+$body$
+declare
+   vValor decimal(10,2);
+begin
+   select valor into vValor 
+     from tbproduto
+    where pro_codigo = new.pro_codigo;
+   update tbnotafiscal 
+      set valor = valor + (new.qtdade * vValor)
+    where nf_fiscal = new.nf_fiscal;
+   update tbproduto 
+       set estoque = estoque - new.qtdade 
+    where pro_codigo = new.pro_codigo;
+   return new;
+end;
+$body$
+language plpgsql;
+
+create trigger atualizanotafiscal
+ after insert on tbitem
+for each row execute procedure atualizanotafiscal();

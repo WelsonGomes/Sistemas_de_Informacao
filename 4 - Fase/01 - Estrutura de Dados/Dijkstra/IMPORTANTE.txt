@@ -1,0 +1,11 @@
+Antes de iniciar precisa cadastrar o banco de dados
+
+script do banco na pasta banco
+
+apenas rodar o script
+
+criar uma conexão com o banco de dados atraves do ODBC Driver com o nome 'estruturadedados'
+
+apos criar a conexão rodar o executavel
+
+qualquer duvida a disposição.

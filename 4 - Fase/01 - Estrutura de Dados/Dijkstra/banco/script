@@ -1,0 +1,186 @@
+--CREATE DATABASE
+
+-- Database: estruturadedados
+
+-- DROP DATABASE IF EXISTS estruturadedados;
+
+CREATE DATABASE estruturadedados
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+--------------------------------------------------------------------------------------------------	
+--CREATE DA TABELA DOS MUNICIPIOS
+
+
+-- Table: public.tbmunicipios
+
+-- DROP TABLE IF EXISTS public.tbmunicipios;
+
+CREATE TABLE IF NOT EXISTS public.tbmunicipios
+(
+    cidcodigo smallint NOT NULL,
+    cidabreviacao character(3) COLLATE pg_catalog."default" NOT NULL,
+    cidnome character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT municipios_pkey PRIMARY KEY (cidcodigo),
+    CONSTRAINT municipios_cidabreviacao_key UNIQUE (cidabreviacao)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tbmunicipios
+    OWNER to postgres;
+	
+--------------------------------------------------------------------------------------------------
+--INSERT DOS VALORES DOS BANCO DE DADOS DOS NOMES DOS MUNICIPIOS
+
+INSERT INTO tbmunicipios values (1,'AGL','Agrolândia');
+INSERT INTO tbmunicipios values (2,'AGN','Agronômica');
+INSERT INTO tbmunicipios values (3,'ATA','Atalanta');
+INSERT INTO tbmunicipios values (4,'AUR','Aurora');
+INSERT INTO tbmunicipios values (5,'BTO','Braço do trombudo');
+INSERT INTO tbmunicipios values (6,'CHL','Chapadão do lageado');
+INSERT INTO tbmunicipios values (7,'DEA','Dona emma');
+INSERT INTO tbmunicipios values (8,'IBI','Ibirama');
+INSERT INTO tbmunicipios values (9,'IMB','Imbuia');
+INSERT INTO tbmunicipios values (10,'ITU','Ituporanga');
+INSERT INTO tbmunicipios values (11,'JBX','José boiteux');
+INSERT INTO tbmunicipios values (12,'LRO','Laurentino');
+INSERT INTO tbmunicipios values (13,'LON','Lontras');
+INSERT INTO tbmunicipios values (14,'MRD','Mirim doce');
+INSERT INTO tbmunicipios values (15,'PET','Petrolândia');
+INSERT INTO tbmunicipios values (16,'PRO','Pouso redondo');
+INSERT INTO tbmunicipios values (17,'PGO','Presidente getúlio');
+INSERT INTO tbmunicipios values (18,'PSN','Presidente nereu');
+INSERT INTO tbmunicipios values (19,'RCM','Rio do campo');
+INSERT INTO tbmunicipios values (20,'ROE','Rio do oeste');
+INSERT INTO tbmunicipios values (21,'RSL','Rio do sul');
+INSERT INTO tbmunicipios values (22,'SLT','Salete');
+INSERT INTO tbmunicipios values (23,'STA','Santa terezinha');
+INSERT INTO tbmunicipios values (24,'TAI','Taió');
+INSERT INTO tbmunicipios values (25,'TCL','Trombudo central');
+INSERT INTO tbmunicipios values (26,'VRS','Vidal ramos');
+INSERT INTO tbmunicipios values (27,'VMS','Vitor meireles');
+INSERT INTO tbmunicipios values (28,'WTH','Witmarsum');
+-------------------------------------------------------------------------------------------------
+
+--CREATE DA TABELA DE CUSTOS
+
+-- Table: public.tbcusto
+
+-- DROP TABLE IF EXISTS public.tbcusto;
+
+CREATE TABLE IF NOT EXISTS public.tbcusto
+(
+    cidcodigoorg smallint NOT NULL,
+    cidcodigodest smallint NOT NULL,
+    custo numeric(10,2),
+    CONSTRAINT tbcusto_pkey PRIMARY KEY (cidcodigoorg, cidcodigodest),
+    CONSTRAINT fk_municipios_destino FOREIGN KEY (cidcodigodest)
+        REFERENCES public.tbmunicipios (cidcodigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_municipios_origem FOREIGN KEY (cidcodigoorg)
+        REFERENCES public.tbmunicipios (cidcodigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.tbcusto
+    OWNER to postgres;
+	
+-----------------------------------------------------------------------------------
+--INSERT DOS DADOS NA TABELA DE CUSTO
+
+INSERT INTO tbcusto values (1,3,'137.90');
+INSERT INTO tbcusto values (1,15,'131.90');
+INSERT INTO tbcusto values (1,25,'10.00');
+INSERT INTO tbcusto values (2,21,'130.80');
+INSERT INTO tbcusto values (3,1,'137.90');
+INSERT INTO tbcusto values (3,15,'140.40');
+INSERT INTO tbcusto values (4,10,'58.80');
+INSERT INTO tbcusto values (4,21,'98.80');
+INSERT INTO tbcusto values (5,25,'89.10');
+INSERT INTO tbcusto values (7,11,'124.30');
+INSERT INTO tbcusto values (7,17,'157.00');
+INSERT INTO tbcusto values (8,13,'115.70');
+INSERT INTO tbcusto values (8,17,'95.60');
+INSERT INTO tbcusto values (9,10,'87.80');
+INSERT INTO tbcusto values (9,26,'97.40');
+INSERT INTO tbcusto values (10,4,'58.80');
+INSERT INTO tbcusto values (10,9,'87.80');
+INSERT INTO tbcusto values (10,15,'115.70');
+INSERT INTO tbcusto values (10,26,'99.40');
+INSERT INTO tbcusto values (11,7,'124.30');
+INSERT INTO tbcusto values (11,20,'30.20');
+INSERT INTO tbcusto values (11,28,'119.40');
+INSERT INTO tbcusto values (12,20,'161.00');
+INSERT INTO tbcusto values (12,21,'66.90');
+INSERT INTO tbcusto values (13,8,'115.70');
+INSERT INTO tbcusto values (13,18,'100.10');
+INSERT INTO tbcusto values (13,21,'102.30');
+INSERT INTO tbcusto values (14,16,'122.60');
+INSERT INTO tbcusto values (14,19,'30.40');
+INSERT INTO tbcusto values (14,24,'20.30');
+INSERT INTO tbcusto values (15,1,'131.90');
+INSERT INTO tbcusto values (15,3,'140.40');
+INSERT INTO tbcusto values (15,10,'115.70');
+INSERT INTO tbcusto values (16,14,'122.60');
+INSERT INTO tbcusto values (16,20,'104.10');
+INSERT INTO tbcusto values (16,21,'90.60');
+INSERT INTO tbcusto values (16,24,'145.90');
+INSERT INTO tbcusto values (17,7,'157.00');
+INSERT INTO tbcusto values (17,8,'95.60');
+INSERT INTO tbcusto values (17,20,'140.00');
+INSERT INTO tbcusto values (17,21,'100.60');
+INSERT INTO tbcusto values (18,13,'100.10');
+INSERT INTO tbcusto values (18,26,'117.70');
+INSERT INTO tbcusto values (19,14,'30.40');
+INSERT INTO tbcusto values (19,22,'111.50');
+INSERT INTO tbcusto values (19,23,'72.90');
+INSERT INTO tbcusto values (19,24,'40.30');
+INSERT INTO tbcusto values (20,11,'30.20');
+INSERT INTO tbcusto values (20,12,'161.00');
+INSERT INTO tbcusto values (20,16,'104.10');
+INSERT INTO tbcusto values (20,17,'140.00');
+INSERT INTO tbcusto values (20,24,'136.10');
+INSERT INTO tbcusto values (20,28,'127.50');
+INSERT INTO tbcusto values (21,2,'130.80');
+INSERT INTO tbcusto values (21,4,'98.80');
+INSERT INTO tbcusto values (21,12,'66.90');
+INSERT INTO tbcusto values (21,13,'102.30');
+INSERT INTO tbcusto values (21,16,'90.60');
+INSERT INTO tbcusto values (21,17,'100.60');
+INSERT INTO tbcusto values (21,25,'128.30');
+INSERT INTO tbcusto values (21,26,'115.70');
+INSERT INTO tbcusto values (22,19,'111.50');
+INSERT INTO tbcusto values (22,24,'77.80');
+INSERT INTO tbcusto values (23,19,'72.90');
+INSERT INTO tbcusto values (24,14,'20.30');
+INSERT INTO tbcusto values (24,16,'145.90');
+INSERT INTO tbcusto values (24,19,'40.30');
+INSERT INTO tbcusto values (24,20,'136.10');
+INSERT INTO tbcusto values (24,22,'77.80');
+INSERT INTO tbcusto values (24,27,'144.00');
+INSERT INTO tbcusto values (24,28,'133.60');
+INSERT INTO tbcusto values (25,1,'10.00');
+INSERT INTO tbcusto values (25,5,'89.10');
+INSERT INTO tbcusto values (25,21,'128.30');
+INSERT INTO tbcusto values (26,9,'97.40');
+INSERT INTO tbcusto values (26,10,'99.40');
+INSERT INTO tbcusto values (26,18,'117.70');
+INSERT INTO tbcusto values (26,21,'115.70');
+INSERT INTO tbcusto values (27,24,'144.00');
+INSERT INTO tbcusto values (27,28,'115.70');
+INSERT INTO tbcusto values (28,11,'119.40');
+INSERT INTO tbcusto values (28,20,'127.50');
+INSERT INTO tbcusto values (28,24,'133.60');
+INSERT INTO tbcusto values (28,27,'115.70');
+INSERT INTO tbcusto values (6,10,'71.20');
+INSERT INTO tbcusto values (10,6,'71.20');

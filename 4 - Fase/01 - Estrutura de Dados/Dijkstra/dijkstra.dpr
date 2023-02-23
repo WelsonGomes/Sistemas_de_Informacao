@@ -1,0 +1,14 @@
+program dijkstra;
+
+uses
+  Forms,
+  un_Dijkstra in 'unitsDijkstra\un_Dijkstra.pas' {Form1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.Title := 'dijkstra';
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

@@ -1,0 +1,66 @@
+1 ----------------------------------------------------------
+
+   select distinct
+          pai.nome
+     from pedido pe
+     join consumidor con
+	   on con.con_codigo = pe.con_codigo
+	 join cidade cid
+	   on cid.cid_codigo = con.cid_codigo
+	 join pais pai
+	   on pai.pai_codigo = cid.pai_codigo
+	where EXTRACT (year from pe.data_pedido) = 2014
+ order by 1
+
+
+2 ----------------------------------------------------------
+
+   select distinct
+          pai.nome as pais,
+		  EXTRACT (year from pe.data_pedido) as data
+     from pedido pe
+     join consumidor con
+	   on con.con_codigo = pe.con_codigo
+	 join cidade cid
+	   on cid.cid_codigo = con.cid_codigo
+	 join pais pai
+	   on pai.pai_codigo = cid.pai_codigo
+	where EXTRACT (year from pe.data_pedido) <> 2014
+ order by 1,2
+
+
+3 ----------------------------------------------------------
+
+   select distinct
+          pai.nome as pais,
+	  EXTRACT (year from pe.data_pedido) as data,
+	  cid.nome
+     from pedido pe
+     join consumidor con
+       on con.con_codigo = pe.con_codigo
+     join cidade cid
+       on cid.cid_codigo = con.cid_codigo
+     join pais pai
+       on pai.pai_codigo = cid.pai_codigo
+    where EXTRACT (year from pe.data_pedido) <> 2014
+ order by 1,2
+
+4 ----------------------------------------------------------
+
+         select distinct
+	        cid.nome
+	   from pedido pe
+       join consumidor con
+	     on con.con_codigo = pe.con_codigo
+	   join cidade cid
+	     on cid.cid_codigo = con.cid_codigo
+	   join item it
+	     on it.ped_codigo = pe.ped_codigo
+	   join produto pro
+	     on pro.pro_codigo = it.pro_codigo
+	   join subcategoria sbcat
+	     on sbcat.sub_codigo = pro.sub_codigo
+	   join categoria cat
+	     on cat.cat_codigo = sbcat.cat_codigo
+	  where cat.descricao <> 'Technology'
+	    and EXTRACT (year from pe.data_pedido) = 2014
