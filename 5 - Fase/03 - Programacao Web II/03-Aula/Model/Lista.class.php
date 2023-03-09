@@ -1,6 +1,6 @@
 <?php
     /*Declaração da classe*/
-    class lista {
+    class Lista {
 
         /*Declaração de um vetor de itens*/
         private $lista_itens = [];
@@ -24,7 +24,7 @@
         function __toString()
         {
             /*Abertura da teg*/
-            $mostrar = "<{$this -> tpoLista}>\n";
+            $mostrar = "<{$this -> tpoLista}>\n";  
 
             /*Montagem da lista */
             foreach($this -> lista_itens as $valor) {
@@ -40,3 +40,4 @@
             return $mostrar;
         }
     }
+?>

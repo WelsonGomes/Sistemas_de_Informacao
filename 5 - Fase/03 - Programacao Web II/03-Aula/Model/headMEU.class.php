@@ -1,17 +1,19 @@
 <?php
-    class HeadClasse {
+    class head {
+
         private $metaUTF = [];
+
         private $titulo;
 
         function addMetas($meta){
 
-            $this->metaUTF = $meta;
+            $this->metaUTF[] = $meta;
             
         }
 
         function __construct($title)
         {
-            $this->titulo = $title;
+            $this -> titulo = $title;
         }
 
         function __toString()

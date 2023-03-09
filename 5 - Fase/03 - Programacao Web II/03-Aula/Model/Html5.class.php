@@ -1,6 +1,5 @@
 <?php
-
-    class HTML5Classe {
+    class Html5 {
 
         /*Declaração de propriedades */
         private $lingua;
